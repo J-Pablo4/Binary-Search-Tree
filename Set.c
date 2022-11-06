@@ -36,79 +36,85 @@ Set* set_new(int (*compare)(void* a, void* b))
     return new_set;
 }
 
+void add_to_set(Set *set, Node *current, void *to_add)
+{
+    if(set->root == NULL)
+    {
+        set->root = node_new(to_add);
+    } else
+    {
+        if(set->compare(current->element, to_add) > 0)
+        {
+            if(current->right == NULL)
+            {
+                current->right = node_new(to_add);
+            } else
+            {
+                current = current->right;
+                add_to_set(set, current, to_add);
+            }
+        } else if(set->compare(current->element, to_add) < 0)
+        {
+            if(current->left == NULL)
+            {
+                current->left = node_new(to_add);
+            } else
+            {
+                current = current->left;
+                add_to_set(set, current, to_add);
+            }
+        }else
+        {
+            printf("Error, couldn't add [%d] element to set because an element with the same value is already in the set\n", *(int *)to_add);
+            return;
+        }
+    }
+}
+
 Set* set_add(Set *set, void *element)
 {
-    if(set->root == NULL)
-    {
-        set->root = node_new(element);
-        return set;
-    }else
-    {
-        Node *current = set->root;
-        while (current != NULL)
-        {
-            if(!set->compare(current->element, element))
-            {
-                return set;
-            }else if(set->compare(current->element, element) > 0)
-            {
-                if(current->right == NULL)
-                {
-                    current->right = node_new(element);
-                    break;
-                }
 
-                current = current->right;
-            }else
-            {
-                if(current->left == NULL)
-                {
-                    current->left = node_new(element);
-                    break;
-                }
+    Node *current = set->root;
+    add_to_set(set, current, element);
 
-                current = current->left;
-            }
-        }
-    }
     return set;
 }
 
-int set_contains(Set *set, void *element)
-{
-    if(set->root == NULL)
-    {
-        return 0;
-    }else
-    {
-        Node *current = set->root;
-        while (current != NULL)
-        {
-            if(!set->compare(current->element, element))
-            {
-                return 1;
-            }else if(set->compare(current->element, element) > 0)
-            {
-                if(current->right == NULL)
-                {
-                    current->right = node_new(element);
-                    break;
-                }
-
-                current = current->right;
-            }else
-            {
-                if(current->left == NULL)
-                {
-                    current->left = node_new(element);
-                    break;
-                }
-
-                current = current->left;
-            }
-        }
-    }
-    return set;
-}
+//int set_contains(Set *set, void *element)
+//{
+//    if(set->root == NULL)
+//    {
+//        return 0;
+//    }else
+//    {
+//        Node *current = set->root;
+//        while (current != NULL)
+//        {
+//            if(!set->compare(current->element, element))
+//            {
+//                return 1;
+//            }else if(set->compare(current->element, element) > 0)
+//            {
+//                if(current->right == NULL)
+//                {
+//                    current->right = node_new(element);
+//                    break;
+//                }
+//
+//                current = current->right;
+//            }else
+//            {
+//                if(current->left == NULL)
+//                {
+//                    current->left = node_new(element);
+//                    break;
+//                }
+//
+//                current = current->left;
+//            }
+//        }
+//    }
+//    return set;
+//}
 
 

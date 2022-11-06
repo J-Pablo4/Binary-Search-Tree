@@ -2,7 +2,9 @@
 
 int compare(void *a, void *b)
 {
-    return *(int*)b - *(int *)a;
+    int a_num = *(int *)a;
+    int b_num = *(int*)b;
+    return b_num - a_num;
 }
 
 int main() {
@@ -22,20 +24,29 @@ int main() {
             numbers[i] = i * -1;
             set_add(s, numbers+i);
         }
-
     }
 
-    int target = 54;
-    if(set_contains(s, &target))
-        printf("It works!\n");
+    int add1 = 17;
+    int add2 = -6;
+    int add3 = -100;
+    int add4 = 99;
 
-    set_remove(s, &target);
+    set_add(s, &add1);
+    set_add(s, &add2);
+    set_add(s, &add3);
+    set_add(s, &add4);
 
-    if(set_contains(s, &target))
-        printf("It does NOT work!\n");
+//    int target = 54;
+//    if(set_contains(s, &target))
+//        printf("It works!\n");
+//
+////    set_remove(s, &target);
+//
+//    if(set_contains(s, &target))
+//        printf("It does NOT work!\n");
 
 
-    int pop = 457;
+    int pop = 4;
     set_add(s, &pop);
 
     return 0;
