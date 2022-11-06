@@ -45,8 +45,5 @@ int main() {
 //    if(set_contains(s, &target))
 //        printf("It does NOT work!\n");
 
-
-
-
     return 0;
 }
