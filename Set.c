@@ -71,6 +71,28 @@ void add_to_set(Set *set, Node *current, void *to_add)
     }
 }
 
+void exists_in_set(Set *set, Node *current, void *element, int *flag)
+{
+    if(current == NULL)
+    {
+        *flag = 0;
+    } else
+    {
+        if(set->compare(current->element, element) == 0)
+        {
+            *flag = 1;
+        } else if(set->compare(current->element, element) < 0)
+        {
+            current = current->left;
+            exists_in_set(set, current, element, flag);
+        }else
+        {
+            current = current->right;
+            exists_in_set(set, current, element, flag);
+        }
+    }
+}
+
 Set* set_add(Set *set, void *element)
 {
 
@@ -80,41 +102,10 @@ Set* set_add(Set *set, void *element)
     return set;
 }
 
-//int set_contains(Set *set, void *element)
-//{
-//    if(set->root == NULL)
-//    {
-//        return 0;
-//    }else
-//    {
-//        Node *current = set->root;
-//        while (current != NULL)
-//        {
-//            if(!set->compare(current->element, element))
-//            {
-//                return 1;
-//            }else if(set->compare(current->element, element) > 0)
-//            {
-//                if(current->right == NULL)
-//                {
-//                    current->right = node_new(element);
-//                    break;
-//                }
-//
-//                current = current->right;
-//            }else
-//            {
-//                if(current->left == NULL)
-//                {
-//                    current->left = node_new(element);
-//                    break;
-//                }
-//
-//                current = current->left;
-//            }
-//        }
-//    }
-//    return set;
-//}
-
-
+int set_contains(Set *set, void *element)
+{
+    Node *current = set->root;
+    int flag = 0;
+    exists_in_set(set, current, element, &flag);
+    return flag;
+}

@@ -36,18 +36,17 @@ int main() {
     set_add(s, &add3);
     set_add(s, &add4);
 
-//    int target = 54;
-//    if(set_contains(s, &target))
-//        printf("It works!\n");
-//
-////    set_remove(s, &target);
+    int target = 54;
+    if(set_contains(s, &target))
+        printf("It works!\n");
+
+//    set_remove(s, &target);
 //
 //    if(set_contains(s, &target))
 //        printf("It does NOT work!\n");
 
 
-    int pop = 4;
-    set_add(s, &pop);
+
 
     return 0;
 }
